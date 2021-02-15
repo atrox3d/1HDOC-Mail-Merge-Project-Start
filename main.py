@@ -7,33 +7,21 @@
     #Hint2: This method will also help you: https://www.w3schools.com/python/ref_string_replace.asp
         #Hint3: THis method will help you: https://www.w3schools.com/python/ref_string_strip.asp
 
-INPUT_LETTER = "input/letters/starting_letter.txt"
-INPUT_NAMES = "input/names/invited_names.txt"
-OUTPUT_PATH = "output/readytosend"
-#
-#   read names from input file
-#
-with open(INPUT_NAMES) as input_names:
-    names = input_names.readlines()
-#
-#   strip \n from name list
-#
-for _ in range(len(names)):
-    names[_] = names[_].strip()
-#
-#   read template text into variable
-#
-with open(INPUT_LETTER) as input_letter:
-    template = input_letter.read()
-print(template)
-#
-#
-#
-for name in names:
-    output_letter = template.replace("[name]", name)
-    output_filename = f"{OUTPUT_PATH}/{name}.txt"
-    print(f"creating {output_filename}...")
-    with open(output_filename, "w") as letter:
-        letter.write(output_letter)
-    print("done.")
+
+PLACEHOLDER = "[name]"
+with open("input/names/invited_names.txt") as names_file:
+    names = names_file.readlines()
+    print(names)
+with open("input/letters/starting_letter.txt") as letter_file:
+    letter_contents = letter_file.read()
+    for name in names:
+        stripped_name = name.strip()
+        new_letter = letter_contents.replace(PLACEHOLDER, name)
+        with open(f"output/readytosend/letter_for_{stripped_name}.txt", "w") as completed:
+            completed.write(new_letter)
+
+
+
+
+
 
